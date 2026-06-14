@@ -11,9 +11,11 @@
 ## ICLR Main Bar
 - [ ] Real-robot validation.
 - [ ] High-fidelity simulator benchmark.
-- [ ] Implemented learned model.
-- [ ] Implemented real competing baselines.
+- [x] Implemented local tactile/precontact evidence benchmark.
+- [x] Implemented strong local competing baselines.
+- [x] Implemented ablations, uncertainty/stress checks, and negative cases.
+- [ ] Implemented learned model checkpoint.
 - [ ] Manual related-work synthesis.
 - [ ] Paper-specific qualitative figures.
 
-Decision: fail ICLR main empirical-rigor gate; archive.
+Decision: v4 evidence audit still fails ICLR main empirical-rigor gate; archive.

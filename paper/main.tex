@@ -4,42 +4,119 @@
 \usepackage{hyperref}
 \usepackage{url}
 \usepackage{booktabs}
-\title{Micro-Slip Precontact Prediction: ICLR Main-Conference Gate Archive}
+\usepackage{graphicx}
+
+\title{Micro-Slip Precontact Prediction: A Negative ICLR-Main Evidence Audit}
 \author{Anonymous Authors}
+
 \begin{document}
 \maketitle
+
 \begin{abstract}
-This document is not an ICLR main-conference submission. It is the v3 main-conference gate for a generated robotics draft about tactile and force prediction. The original research bet was: Predict micro-slip risk before stable contact is visually apparent. After a stricter hostile review, the honest terminal decision is \textbf{KILL/ARCHIVE}. Submission-hardening version: v3.
+This paper is not submission-ready for ICLR main. The original research bet was that a robot can predict micro-slip before stable contact is visually apparent and use that prediction to improve grasp control. We rebuilt the repository around a deterministic tactile/precontact mechanics benchmark with four grasp tasks, five distribution shifts, seven seeds, nine predictors/controllers, seven ablations, and a combined stress sweep. The evidence is mixed but terminally negative. On the combined hard shift, the proposed precontact model improves early-warning recall over a vision threshold by 0.571 and improves grasp success by 0.184, but it loses average precision to the strongest non-oracle baseline: paired AP difference -0.016 with a 95 percent CI of 0.018. It also has high false-alarm rate (0.817) and high control cost (0.929). Ablations contradict the mechanism: vision-only precontact reaches AP 0.766 and minus-friction reaches AP 0.764, both above the full method's AP 0.744. The honest terminal decision is \textbf{KILL/ARCHIVE}.
 \end{abstract}
 
-\section{Gate Decision}
-The v2 paper was workshop-only. Under the active ICLR-main standard, that is insufficient. The local artifacts contain synthetic multi-seed diagnostics, but no real-robot validation, high-fidelity simulator benchmark, trained world-action model, implemented real baselines, or manual full-paper related-work synthesis. These missing items are not recoverable by editing text or rerunning the synthetic script.
+\section{Question}
+The draft asked whether a robot can forecast micro-slip before stable contact and adjust grasp control earlier than conventional tactile or force-threshold systems. This is a crowded tactile robotics question. Prior work already includes tactile-driven slip prediction, sensor-less fingertip contact and force estimation, soft barometric and capacitive tactile sensors, distributed contact-force slip detection, friction estimation before gross slip, and high-resolution optical tactile systems.
 
-\section{Fatal ICLR-Main Blockers}
-\begin{itemize}
-\item Evidence is synthetic and generated from a shared batch template.
-\item Baselines are diagnostic probability models, not implemented competing robot systems.
-\item Ablations do not correspond to a trained model checkpoint.
-\item No hardware, high-fidelity benchmark, qualitative rollouts, or failure videos are available.
-\item Related work is based on pool slices and hostile metadata, not a manual full-paper synthesis.
-\item Claims would be misleading if framed as ICLR-main empirical robotics evidence.
-\end{itemize}
+The rebuild therefore uses a hostile gate: precontact micro-slip prediction must beat strong tactile, physics, and uncertainty baselines on both prediction quality and closed-loop grasp outcomes. Early lead time alone is not enough.
 
-\section{Hostile Prior-Work Pressure}
-The closest local hostile records include:
-\begin{itemize}
-\item Tactile sensor-less fingertip contact detection and force estimation for stable grasping with an under-actuated hand (2024)
-\item Tactile-Driven Grasp Stability and Slip Prediction (2019)
-\item A Soft Barometric Tactile Sensor to Simultaneously Localize Contact and Estimate Normal Force With Validation to Detect Slip in a Robotic Gripper (2022)
-\item Leveraging distributed contact force measurements for slip detection: a physics-based approach enabled by a data-driven tactile sensor (2022)
-\item Physical model of electrical contact friction for wear failure analysis and prediction of aerospace slip rings (2026)
-\end{itemize}
-These works make generic world models, uncertainty, model-based planning, and robot policy robustness crowded. Without real empirical evidence, the remaining novelty boundary is too weak for ICLR main.
+\section{Benchmark}
+Each episode simulates a gripper approaching an object with hidden friction, compliance, surface texture, approach angle, actuator lag, visual occlusion, and sensor noise. The benchmark covers four tasks: smooth low-friction picking, textured fragile picking, curved-surface pinching, and compliant-object lifting. The distribution shifts are nominal precontact, low-friction shift, compliance shift, sensor-noise shift, and combined hard shift.
 
-\section{What Remains Useful}
-The archive is still useful as an idea seed and reproducibility scaffold. The synthetic code, stress-test CSVs, reviewer attacks, and novelty-boundary docs can inform a future project. The correct next step is not more paper polishing; it is new evidence: implemented models, real baselines, manual related work, and robot or high-fidelity simulator validation.
+The main run contains 120,960 episode-level rollouts. The ablation run contains 18,816 rollouts. The stress sweep contains 56,448 rollouts. The evidence is regenerated with:
+\begin{verbatim}
+python src\run_experiment.py
+\end{verbatim}
 
-\section{Terminal Action}
-Decision: \textbf{KILL/ARCHIVE for ICLR main}. Do not submit this paper to ICLR main in the current form. Revival requires a substantially new empirical project.
+\section{Compared Methods}
+The compared methods are a vision gap threshold, normal-force threshold, force-derivative detector, friction-cone margin estimator, tactile temporal filter, optical-tactile classifier, ensemble uncertainty guard, the proposed precontact micro-slip model, and an oracle precontact risk model. The proposed method uses precontact shear, friction prior, compliance estimate, approach geometry, latency margin, and sensor noise to predict future micro-slip and trigger preemptive tightening or slowing.
+
+\section{Combined-Hard-Shift Results}
+Table~\ref{tab:combined} shows the core result. The proposed method has a real strength: it gives early warnings and improves closed-loop success compared with weak visual and post-contact detectors. However, it does not beat the strongest non-oracle predictor on average precision and it pays with many false alarms.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+Method & AP & Early recall & False alarm & Success & Gross slip \\
+\midrule
+Vision threshold & \textbf{0.768} & 0.261 & \textbf{0.190} & 0.042 & 0.956 \\
+Normal force & 0.721 & 0.000 & 0.310 & 0.007 & 0.992 \\
+Force derivative & 0.735 & 0.000 & 0.114 & 0.006 & 0.993 \\
+Friction cone & 0.742 & 0.565 & 0.558 & 0.227 & 0.773 \\
+Tactile temporal & 0.741 & 0.000 & 0.247 & 0.013 & 0.986 \\
+Optical tactile & 0.747 & 0.000 & 0.569 & 0.025 & 0.974 \\
+Ensemble guard & 0.746 & \textbf{0.872} & 0.850 & \textbf{0.246} & \textbf{0.754} \\
+Proposed precontact & 0.751 & 0.833 & 0.817 & 0.226 & 0.773 \\
+Oracle & 0.797 & 0.994 & 0.982 & 0.756 & 0.243 \\
+\bottomrule
+\end{tabular}
+\caption{Combined hard shift. Higher AP, early recall, and success are better; lower false alarm and gross slip are better. The proposed method improves early warning but does not clear the strongest non-oracle AP baseline and has high false alarms.}
+\label{tab:combined}
+\end{table}
+
+The paired comparison chooses the vision threshold as the strongest non-oracle AP baseline. The proposed method's paired AP difference is -0.016 with a 95 percent CI of 0.018. Although it improves early recall by 0.571 and success by 0.184, the high false-alarm and control-cost penalties prevent a submission-ready claim.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{../figures/microslip_prediction_quality.png}
+\caption{Prediction metrics on the combined hard shift. Precontact warning helps recall but does not yield decisive average-precision gains.}
+\label{fig:prediction}
+\end{figure}
+
+\section{Closed-Loop Control}
+The proposed model reaches 0.226 grasp success and 0.773 gross-slip rate on combined hard shift. This is much better than vision-only thresholding, but it is roughly tied with the friction-cone margin and below the ensemble uncertainty guard. More importantly, it achieves the gain by triggering many interventions: false-alarm rate 0.817 and control cost 0.929. That is too brittle for a main-conference robotics claim.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{../figures/microslip_control_outcomes.png}
+\caption{Closed-loop grasp outcomes. The proposed method improves over weak post-contact detectors but does not decisively beat strong local baselines.}
+\label{fig:control}
+\end{figure}
+
+\section{Ablation Failure}
+Table~\ref{tab:ablations} is the strongest reason to archive the paper. The full precontact mechanism does not dominate its own stripped variants. Vision-only precontact reaches AP 0.766 and minus-friction reaches AP 0.764, both above full precontact AP 0.744. The compliance and friction terms appear to add false positives under the simulated shifts rather than a robust mechanism.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Ablation & AP & Early recall & Success & False alarm \\
+\midrule
+Full precontact & 0.744 & \textbf{0.835} & \textbf{0.227} & 0.842 \\
+Minus shear & 0.756 & 0.297 & 0.046 & 0.262 \\
+Minus friction & 0.764 & 0.802 & 0.202 & 0.759 \\
+Minus compliance & 0.754 & 0.618 & 0.148 & 0.589 \\
+Minus latency & 0.755 & 0.731 & 0.171 & 0.690 \\
+Vision only & \textbf{0.766} & 0.278 & 0.049 & \textbf{0.215} \\
+Force only & 0.751 & 0.000 & 0.004 & 0.105 \\
+\bottomrule
+\end{tabular}
+\caption{Ablations on combined hard shift. The full mechanism improves early recall and success, but it loses AP to stripped variants and has high false alarms.}
+\label{tab:ablations}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{../figures/microslip_ablation.png}
+\caption{Ablation audit. Core components do not yield a clean monotonic mechanism improvement.}
+\label{fig:ablation}
+\end{figure}
+
+\section{Stress Sweep}
+At maximum stress, the proposed method reaches AP 0.761 and success 0.207. The optical-tactile baseline reaches AP 0.769, and the ensemble guard reaches higher early recall and success. The stress gate therefore fails: precontact modeling remains plausible, but not decisive.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{../figures/microslip_stress_sweep.png}
+\caption{Combined stress sweep by average precision. The proposed method does not dominate strong tactile/uncertainty baselines.}
+\label{fig:stress}
+\end{figure}
+
+\section{Decision}
+The rebuilt evidence gives a useful negative result. Precontact warning can increase early recall and improve control relative to weak visual thresholds, but this paper cannot honestly claim ICLR-main readiness. It lacks hardware or accepted high-fidelity tactile validation, fails the AP gate, carries excessive false alarms/control cost, and is contradicted by ablations. The terminal recommendation is \textbf{KILL/ARCHIVE}. Revival requires a real tactile dataset or simulator, stronger calibration, and a mechanism that beats friction-cone, optical-tactile, and uncertainty baselines without simply over-triggering.
 
 \end{document}

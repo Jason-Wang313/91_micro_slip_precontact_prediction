@@ -1,4 +1,4 @@
-case,expected_behavior,observed_success,lesson
-unmodeled_hardware_damage,planner abstains or requests human inspection,0.18,branch semantics cannot repair missing actuation
-semantic_goal_ambiguity,diagnostic physical probes do not solve language ambiguity,0.31,needs a separate instruction-grounding loop
-adversarial_sensor_dropout,tail-risk objective becomes conservative,0.39,sensor-health modeling is out of scope
+case,observed_failure,implication
+compliance_overreaction,precontact compliance raises risk before actual slip and increases false tightening on soft objects,the compliance term is not reliably separable from harmless deformation
+post_contact_tactile_catches_up,friction-cone and optical-tactile baselines match or beat prediction quality once contact begins,precontact lead time alone is insufficient without a decisive control gain
+sensor_noise_shift,precontact shear estimates become poorly calibrated under visual occlusion and tactile noise,submission-ready claims require real tactile hardware or accepted high-fidelity validation
