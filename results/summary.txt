@@ -1,16 +1,47 @@
-Submission-hardening experiment for paper 91 micro_slip_precontact_prediction
-Seven seeds, 600 episodes per seed, strong baselines, ablations, stress sweep, and negative cases.
-observed_only_behavior_clone hidden_mode_shift mean_success=0.3974 ci95=0.0180 tail=0.6026
-observed_only_behavior_clone combined_stress mean_success=0.3219 ci95=0.0101 tail=0.6781
-data_augmentation_wam hidden_mode_shift mean_success=0.4836 ci95=0.0156 tail=0.5164
-data_augmentation_wam combined_stress mean_success=0.4100 ci95=0.0130 tail=0.5900
-scalar_uncertainty_planner hidden_mode_shift mean_success=0.5431 ci95=0.0153 tail=0.4569
-scalar_uncertainty_planner combined_stress mean_success=0.4919 ci95=0.0145 tail=0.5081
-ensemble_disagreement_planner hidden_mode_shift mean_success=0.5783 ci95=0.0075 tail=0.4217
-ensemble_disagreement_planner combined_stress mean_success=0.5438 ci95=0.0102 tail=0.4562
-conformal_risk_filter hidden_mode_shift mean_success=0.6129 ci95=0.0169 tail=0.3871
-conformal_risk_filter combined_stress mean_success=0.5478 ci95=0.0081 tail=0.4522
-proposed_branch_mechanism hidden_mode_shift mean_success=0.6738 ci95=0.0102 tail=0.3262
-proposed_branch_mechanism combined_stress mean_success=0.6464 ci95=0.0178 tail=0.3536
-oracle_branch_upper_bound hidden_mode_shift mean_success=0.7588 ci95=0.0154 tail=0.2412
-oracle_branch_upper_bound combined_stress mean_success=0.7317 ci95=0.0179 tail=0.2683
+Paper 91 micro_slip_precontact_prediction v4 rebuild
+Terminal recommendation: KILL_ARCHIVE
+Reason: deterministic tactile/precontact benchmark added; no robot hardware or accepted high-fidelity tactile simulator validation is available.
+Main rollout rows: 120960
+Ablation rollout rows: 18816
+Stress rollout rows: 56448
+Seeds: [0, 1, 2, 3, 4, 5, 6]
+
+Combined hard shift:
+vision_gap_threshold ap=0.76754 ci95=0.02514 auroc=0.54793 early=0.26130 false_alarm=0.18968 success=0.04241 gross=0.95647 cost=0.57495
+normal_force_threshold ap=0.72106 ci95=0.02356 auroc=0.47562 early=0.00000 false_alarm=0.31012 success=0.00707 gross=0.99219 cost=0.62338
+force_derivative_detector ap=0.73498 ci95=0.02516 auroc=0.49562 early=0.00000 false_alarm=0.11441 success=0.00558 gross=0.99330 cost=0.52644
+friction_cone_margin ap=0.74190 ci95=0.02346 auroc=0.49622 early=0.56513 false_alarm=0.55784 success=0.22656 gross=0.77269 cost=0.76305
+tactile_temporal_filter ap=0.74148 ci95=0.02778 auroc=0.51270 early=0.00000 false_alarm=0.24664 success=0.01339 gross=0.98586 cost=0.61238
+optical_tactile_classifier ap=0.74687 ci95=0.02147 auroc=0.51983 early=0.00000 false_alarm=0.56895 success=0.02493 gross=0.97433 cost=0.76163
+ensemble_uncertainty_guard ap=0.74598 ci95=0.02457 auroc=0.52132 early=0.87167 false_alarm=0.84997 success=0.24591 gross=0.75372 cost=1.07746
+proposed_precontact_microslip ap=0.75146 ci95=0.02453 auroc=0.51779 early=0.83276 false_alarm=0.81723 success=0.22619 gross=0.77344 cost=0.92853
+oracle_precontact_risk ap=0.79658 ci95=0.02615 auroc=0.60085 early=0.99358 false_alarm=0.98249 success=0.75632 gross=0.24256 cost=1.06563
+paired AP diff vs best AP baseline vision_gap_threshold=-0.01608 ci95=0.01821
+paired early-recall diff=0.57146 ci95=0.04671; paired success diff=0.18378 ci95=0.03105
+
+Ablations:
+force_only_precontact ap=0.75057 ci95=0.02085 early=0.00000 success=0.00409 false_alarm=0.10521 cost=0.48062
+full_precontact_microslip ap=0.74431 ci95=0.02761 early=0.83478 success=0.22731 false_alarm=0.84249 cost=0.93312
+minus_compliance_model ap=0.75430 ci95=0.02315 early=0.61827 success=0.14807 false_alarm=0.58881 cost=0.78168
+minus_friction_prior ap=0.76400 ci95=0.02289 early=0.80206 success=0.20238 false_alarm=0.75921 cost=0.89653
+minus_latency_margin ap=0.75528 ci95=0.02586 early=0.73074 success=0.17076 false_alarm=0.69001 cost=0.84972
+minus_precontact_shear ap=0.75591 ci95=0.03024 early=0.29720 success=0.04613 false_alarm=0.26181 cost=0.58838
+vision_only_precontact ap=0.76620 ci95=0.02302 early=0.27780 success=0.04911 false_alarm=0.21532 cost=0.58700
+
+Combined stress level 1.0:
+ensemble_uncertainty_guard ap=0.76301 ci95=0.03691 early=0.88138 success=0.23533 gross=0.76467
+friction_cone_margin ap=0.74837 ci95=0.03942 early=0.56825 success=0.22321 gross=0.77551
+optical_tactile_classifier ap=0.76949 ci95=0.03210 early=0.00000 success=0.02870 gross=0.97066
+oracle_precontact_risk ap=0.79804 ci95=0.03258 early=0.99624 success=0.76212 gross=0.23661
+proposed_precontact_microslip ap=0.76101 ci95=0.03034 early=0.84897 success=0.20727 gross=0.79273
+tactile_temporal_filter ap=0.73547 ci95=0.03871 early=0.00000 success=0.01722 gross=0.98214
+
+Gate checks:
+ap_gate=False
+early_recall_gate=True
+control_gate=True
+false_alarm_ok=False
+cost_ok=False
+ablation_gate=False best_ablation=vision_only_precontact
+stress_gate=False stress_best_baseline=optical_tactile_classifier
+oracle_combined_ap=0.79658

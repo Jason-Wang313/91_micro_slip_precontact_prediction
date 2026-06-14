@@ -1,0 +1,2 @@
+split,proposed,best_non_oracle_baseline,paired_ap_diff,paired_ap_ci95,paired_early_recall_diff,paired_early_recall_ci95,paired_success_diff,paired_success_ci95,paired_gross_slip_reduction,paired_gross_slip_ci95,ap_gate,early_recall_gate,control_gate,false_alarm_gate,control_cost_gate,ablation_gate,stress_gate,terminal
+combined_hard_shift,proposed_precontact_microslip,vision_gap_threshold,-0.01608,0.01821,0.57146,0.04671,0.18378,0.03105,0.18304,0.03093,False,True,True,False,False,False,False,KILL_ARCHIVE
