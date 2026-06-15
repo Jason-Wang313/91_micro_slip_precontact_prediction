@@ -24,7 +24,7 @@ The rebuild therefore uses a hostile gate: precontact micro-slip prediction must
 \section{Benchmark}
 Each episode simulates a gripper approaching an object with hidden friction, compliance, surface texture, approach angle, actuator lag, visual occlusion, and sensor noise. The benchmark covers four tasks: smooth low-friction picking, textured fragile picking, curved-surface pinching, and compliant-object lifting. The distribution shifts are nominal precontact, low-friction shift, compliance shift, sensor-noise shift, and combined hard shift.
 
-The main run contains 120,960 episode-level rollouts. The ablation run contains 18,816 rollouts. The stress sweep contains 56,448 rollouts. The evidence is regenerated with:
+The main run contains 120,960 episode-level rollouts. The ablation run contains 18,816 rollouts. The stress sweep contains 56,448 rollouts. The evidence was re-run from source on 2026-06-15 and is regenerated with:
 \begin{verbatim}
 python src\run_experiment.py
 \end{verbatim}
