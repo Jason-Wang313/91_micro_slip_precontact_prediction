@@ -192,3 +192,24 @@ Attack: No meaningful recoverable ICLR-main issue remains after archiving.
 Verdict: Terminal condition reached.
 
 Action: Mark KILL_ARCHIVE and stop.
+
+## v4 Rerun Gate Round 28
+Attack: The local benchmark might show a decisive AP win for precontact micro-slip prediction after rerun.
+
+Verdict: Failed. The proposed method reaches AP `0.75146`, while `vision_gap_threshold` reaches AP `0.76754`; paired AP difference is `-0.01608 +/- 0.01821`.
+
+Action: Keep KILL_ARCHIVE.
+
+## v4 Rerun Gate Round 29
+Attack: Early warning and closed-loop success might compensate for AP loss.
+
+Verdict: Failed for ICLR main. Early recall and success improve, but false-alarm rate is `0.81723` and control cost is `0.92853`, failing the practical gate.
+
+Action: Do not claim submission readiness.
+
+## v4 Rerun Gate Round 30
+Attack: Ablations might validate the mechanism.
+
+Verdict: Failed. `vision_only_precontact` and `minus_friction_prior` beat the full method on AP.
+
+Action: Preserve archive decision.

@@ -6,6 +6,10 @@ ICLR main-conference readiness: NO.
 
 Paper 91 was rebuilt as a v4 deterministic tactile/precontact mechanics evidence audit. The evidence is not enough for an ICLR main submission.
 
+Latest rerun: 2026-06-15 from `src/run_experiment.py`; output redirected to `logs/91_micro_slip_precontact_prediction_continuation_rerun_20260615.log`.
+
+Evidence coverage: 120,960 main rollouts, 18,816 ablation rollouts, 56,448 stress rollouts, seven seeds, four tasks, five precontact shifts, nine methods, seven ablations, and three negative cases.
+
 Reasons:
 
 - The proposed model improves early warning, but its combined-hard-shift AP is 0.751 versus 0.768 for the strongest non-oracle AP baseline.

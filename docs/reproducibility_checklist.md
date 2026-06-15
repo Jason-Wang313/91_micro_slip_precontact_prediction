@@ -1,6 +1,7 @@
 # Reproducibility Checklist
 
 ## What Reproduces
+- [x] `python -m py_compile src\run_experiment.py`
 - [x] `python src/run_experiment.py`
 - [x] `results/metrics.csv`
 - [x] `results/raw_seed_metrics.csv`
