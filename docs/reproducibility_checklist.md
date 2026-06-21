@@ -2,19 +2,40 @@
 
 ## What Reproduces
 - [x] `python -m py_compile src\run_experiment.py`
-- [x] `python src/run_experiment.py`
-- [x] `results/metrics.csv`
+- [x] `python src\run_experiment.py`
+- [x] `results/rollouts.csv`
+- [x] `results/dataset_summary.csv`
 - [x] `results/raw_seed_metrics.csv`
+- [x] `results/metrics.csv`
+- [x] `results/pairwise_stats.csv`
+- [x] `results/hard_aggregate_seed_metrics.csv`
+- [x] `results/hard_aggregate_metrics.csv`
+- [x] `results/hard_aggregate_pairwise_stats.csv`
+- [x] `results/ablation_rollouts.csv`
+- [x] `results/ablation_seed_metrics.csv`
 - [x] `results/ablation_metrics.csv`
+- [x] `results/ablation_metric_long.csv`
+- [x] `results/stress_sweep_raw.csv`
+- [x] `results/stress_sweep_seed_metrics.csv`
 - [x] `results/stress_sweep.csv`
+- [x] `results/stress_sweep_metric_long.csv`
+- [x] `results/fixed_risk_raw.csv`
+- [x] `results/fixed_risk_seed_metrics.csv`
+- [x] `results/fixed_risk_metrics.csv`
+- [x] `results/fixed_risk_pairwise.csv`
 - [x] `results/negative_cases.csv`
+- [x] `python scripts\generate_manuscript.py`
 - [x] `paper/main.tex`
+- [x] `paper/references.bib`
+- [x] LaTeX/BibTeX PDF compilation.
+- [x] `python scripts\validate_submission_artifacts.py`
 - [x] Canonical PDF: `C:/Users/wangz/Downloads/91.pdf`
 
 ## What Does Not Reproduce
 - [ ] Real robot results.
-- [ ] High-fidelity benchmark runs.
-- [ ] Trained WAM checkpoints.
-- [ ] Competing learned baselines.
+- [ ] Accepted high-fidelity tactile benchmark runs.
+- [ ] Trained tactile policy/controller checkpoints.
+- [ ] Independent external baseline implementations.
+- [ ] Manual expert literature synthesis beyond generated prior-work pressure artifacts.
 
-This is reproducible as an archive memo and synthetic stress test, not as an ICLR-main robotics system paper.
+This is reproducible as a negative archive manuscript and synthetic stress-test suite, not as an ICLR-main robotics system paper.

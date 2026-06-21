@@ -1,47 +1,167 @@
-Paper 91 micro_slip_precontact_prediction v4 rebuild
+Paper 91 micro_slip_precontact_prediction v5 expanded audit
 Terminal recommendation: KILL_ARCHIVE
-Reason: deterministic tactile/precontact benchmark added; no robot hardware or accepted high-fidelity tactile simulator validation is available.
-Main rollout rows: 120960
-Ablation rollout rows: 18816
-Stress rollout rows: 56448
-Seeds: [0, 1, 2, 3, 4, 5, 6]
+ICLR main ready: no
+Reason: expanded CPU-only micro-slip/precontact audit adds stronger optical-tactile, conformal, particle-friction, MPC, recovery-aware, ablation, stress, and fixed-risk tests, but no real robot or accepted high-fidelity tactile benchmark evidence exists.
+Main rollout rows: 215040
+Dataset summary rows: 15360
+Main seed-metric rows: 1120
+Main metric rows: 1456
+Main pairwise rows: 1248
+Hard aggregate seed rows: 140
+Hard aggregate metric rows: 182
+Hard aggregate pairwise rows: 156
+Ablation rollout rows: 76800
+Ablation seed rows: 100
+Ablation metric rows: 130
+Stress raw rows: 302400
+Stress seed rows: 840
+Stress metric rows: 1092
+Fixed-risk raw rows: 69120
+Fixed-risk seed rows: 480
+Fixed-risk metric rows: 288
+Fixed-risk pairwise rows: 240
+Negative cases: 24
 
-Combined hard shift:
-vision_gap_threshold ap=0.76754 ci95=0.02514 auroc=0.54793 early=0.26130 false_alarm=0.18968 success=0.04241 gross=0.95647 cost=0.57495
-normal_force_threshold ap=0.72106 ci95=0.02356 auroc=0.47562 early=0.00000 false_alarm=0.31012 success=0.00707 gross=0.99219 cost=0.62338
-force_derivative_detector ap=0.73498 ci95=0.02516 auroc=0.49562 early=0.00000 false_alarm=0.11441 success=0.00558 gross=0.99330 cost=0.52644
-friction_cone_margin ap=0.74190 ci95=0.02346 auroc=0.49622 early=0.56513 false_alarm=0.55784 success=0.22656 gross=0.77269 cost=0.76305
-tactile_temporal_filter ap=0.74148 ci95=0.02778 auroc=0.51270 early=0.00000 false_alarm=0.24664 success=0.01339 gross=0.98586 cost=0.61238
-optical_tactile_classifier ap=0.74687 ci95=0.02147 auroc=0.51983 early=0.00000 false_alarm=0.56895 success=0.02493 gross=0.97433 cost=0.76163
-ensemble_uncertainty_guard ap=0.74598 ci95=0.02457 auroc=0.52132 early=0.87167 false_alarm=0.84997 success=0.24591 gross=0.75372 cost=1.07746
-proposed_precontact_microslip ap=0.75146 ci95=0.02453 auroc=0.51779 early=0.83276 false_alarm=0.81723 success=0.22619 gross=0.77344 cost=0.92853
-oracle_precontact_risk ap=0.79658 ci95=0.02615 auroc=0.60085 early=0.99358 false_alarm=0.98249 success=0.75632 gross=0.24256 cost=1.06563
-paired AP diff vs best AP baseline vision_gap_threshold=-0.01608 ci95=0.01821
-paired early-recall diff=0.57146 ci95=0.04671; paired success diff=0.18378 ci95=0.03105
+Frozen hard-aggregate gate:
+best_ap_reference=particle_friction_belief
+best_success_reference=recovery_aware_grasp_mpc
+safest_reference=recovery_aware_grasp_mpc
+lowest_damage_reference=recovery_aware_grasp_mpc
+lowest_cost_reference=normal_force_threshold
+best_calibration_reference=particle_friction_belief
+lowest_false_alarm_reference=normal_force_threshold
+best_utility_reference=recovery_aware_grasp_mpc
+proposal_ap=0.80088
+best_ap=0.80598
+proposal_success=0.32799
+best_success=0.40325
+proposal_gross_slip=0.42383
+safest_gross_slip=0.39844
+proposal_damage=0.09401
+lowest_damage=0.08359
+proposal_false_alarm=0.91561
+lowest_false_alarm=0.16578
+proposal_cost=0.33957
+lowest_cost=0.07896
+proposal_ece=0.08042
+best_ece=0.07205
+proposal_utility=-0.02258
+best_utility=0.06676
+paired_ap_lower95=-0.01806
+paired_success_lower95=-0.08393
+paired_gross_slip_upper95=0.04221
+paired_utility_lower95=-0.10436
+main_gate=False
+control_gate=False
+safety_gate=False
+calibration_gate=False
+burden_gate=False
+mechanism_gate=True
+mechanism_best_ablation=full_precontact_microslip_v5
+stress_gate=False
+stress_dominated_by=recovery_aware_grasp_mpc
+fixed_risk_gate=False
+scope_gate=False
+low_signal_high_risk_shift: v5_coverage=0.00000, v5_success=0.00000, v5_gross_slip=0.00000
+combined_hard_shift: v5_coverage=0.00000, v5_success=0.00000, v5_gross_slip=0.00000
 
-Ablations:
-force_only_precontact ap=0.75057 ci95=0.02085 early=0.00000 success=0.00409 false_alarm=0.10521 cost=0.48062
-full_precontact_microslip ap=0.74431 ci95=0.02761 early=0.83478 success=0.22731 false_alarm=0.84249 cost=0.93312
-minus_compliance_model ap=0.75430 ci95=0.02315 early=0.61827 success=0.14807 false_alarm=0.58881 cost=0.78168
-minus_friction_prior ap=0.76400 ci95=0.02289 early=0.80206 success=0.20238 false_alarm=0.75921 cost=0.89653
-minus_latency_margin ap=0.75528 ci95=0.02586 early=0.73074 success=0.17076 false_alarm=0.69001 cost=0.84972
-minus_precontact_shear ap=0.75591 ci95=0.03024 early=0.29720 success=0.04613 false_alarm=0.26181 cost=0.58838
-vision_only_precontact ap=0.76620 ci95=0.02302 early=0.27780 success=0.04911 false_alarm=0.21532 cost=0.58700
+Hard aggregate metrics:
+vision_gap_threshold ap=0.80227 auroc=0.55434 ece=0.20541 early=0.50557 false_alarm=0.42635 success=0.14831 gross=0.58047 damage=0.12240 cost=0.14470 utility=-0.22743
+normal_force_threshold ap=0.78421 auroc=0.51271 ece=0.42070 early=0.18912 false_alarm=0.16578 success=0.09987 gross=0.64023 damage=0.13555 cost=0.07896 utility=-0.28574
+force_derivative_detector ap=0.78129 auroc=0.51333 ece=0.28755 early=0.43278 false_alarm=0.42055 success=0.12240 gross=0.60898 damage=0.13425 cost=0.12172 utility=-0.26679
+friction_cone_margin ap=0.79682 auroc=0.55072 ece=0.10276 early=0.91034 false_alarm=0.87410 success=0.25599 gross=0.46367 damage=0.10143 cost=0.28195 utility=-0.10182
+tactile_temporal_filter ap=0.79296 auroc=0.53781 ece=0.18152 early=0.66922 false_alarm=0.61192 success=0.15156 gross=0.56706 damage=0.12604 cost=0.17178 utility=-0.23177
+optical_tactile_classifier ap=0.79705 auroc=0.55053 ece=0.09320 early=0.95426 false_alarm=0.92127 success=0.20872 gross=0.50781 damage=0.11081 cost=0.27423 utility=-0.17434
+ensemble_uncertainty_guard ap=0.79845 auroc=0.55426 ece=0.09426 early=0.99171 false_alarm=0.98631 success=0.31810 gross=0.41563 damage=0.08880 cost=0.45660 utility=-0.05561
+conformal_precontact_risk ap=0.80258 auroc=0.56048 ece=0.07534 early=0.81950 false_alarm=0.75649 success=0.23242 gross=0.48359 damage=0.10599 cost=0.23184 utility=-0.11952
+particle_friction_belief ap=0.80598 auroc=0.56041 ece=0.07205 early=0.96451 false_alarm=0.93913 success=0.28294 gross=0.45599 damage=0.09362 cost=0.28702 utility=-0.07117
+mpc_grip_stabilizer ap=0.79680 auroc=0.54356 ece=0.10037 early=0.90812 false_alarm=0.87331 success=0.36250 gross=0.41523 damage=0.09232 cost=0.32733 utility=0.02490
+recovery_aware_grasp_mpc ap=0.80004 auroc=0.54822 ece=0.10130 early=0.93688 false_alarm=0.92397 success=0.40325 gross=0.39844 damage=0.08359 cost=0.36671 utility=0.06676
+precontact_microslip_v4 ap=0.80526 auroc=0.56131 ece=0.10484 early=0.94413 false_alarm=0.92158 success=0.30404 gross=0.43906 damage=0.09831 cost=0.41596 utility=-0.07360
+calibrated_precontact_microslip_v5 ap=0.80088 auroc=0.55453 ece=0.08042 early=0.94663 false_alarm=0.91561 success=0.32799 gross=0.42383 damage=0.09401 cost=0.33957 utility=-0.02258
+oracle_precontact_risk ap=0.85087 auroc=0.65211 ece=0.02345 early=0.99224 false_alarm=0.97270 success=0.60365 gross=0.23685 damage=0.04700 cost=0.31438 utility=0.37067
 
-Combined stress level 1.0:
-ensemble_uncertainty_guard ap=0.76301 ci95=0.03691 early=0.88138 success=0.23533 gross=0.76467
-friction_cone_margin ap=0.74837 ci95=0.03942 early=0.56825 success=0.22321 gross=0.77551
-optical_tactile_classifier ap=0.76949 ci95=0.03210 early=0.00000 success=0.02870 gross=0.97066
-oracle_precontact_risk ap=0.79804 ci95=0.03258 early=0.99624 success=0.76212 gross=0.23661
-proposed_precontact_microslip ap=0.76101 ci95=0.03034 early=0.84897 success=0.20727 gross=0.79273
-tactile_temporal_filter ap=0.73547 ci95=0.03871 early=0.00000 success=0.01722 gross=0.98214
+Key paired hard-aggregate differences:
+calibrated_precontact_microslip_v5_minus_particle_friction_belief average_precision: mean=-0.005094 ci95=0.012962 lower95=-0.018056 upper95=0.007868
+calibrated_precontact_microslip_v5_minus_particle_friction_belief auroc: mean=-0.005884 ci95=0.023851 lower95=-0.029735 upper95=0.017967
+calibrated_precontact_microslip_v5_minus_particle_friction_belief ece: mean=0.008373 ci95=0.013343 lower95=-0.004969 upper95=0.021716
+calibrated_precontact_microslip_v5_minus_particle_friction_belief early_recall: mean=-0.017877 ci95=0.005876 lower95=-0.023753 upper95=-0.012002
+calibrated_precontact_microslip_v5_minus_particle_friction_belief false_alarm_rate: mean=-0.023522 ci95=0.011604 lower95=-0.035126 upper95=-0.011919
+calibrated_precontact_microslip_v5_minus_particle_friction_belief lead_time_margin: mean=0.029876 ci95=0.000564 lower95=0.029312 upper95=0.030440
+calibrated_precontact_microslip_v5_minus_particle_friction_belief task_success: mean=0.045052 ci95=0.012903 lower95=0.032150 upper95=0.057955
+calibrated_precontact_microslip_v5_minus_particle_friction_belief gross_slip: mean=-0.032162 ci95=0.018273 lower95=-0.050435 upper95=-0.013888
+calibrated_precontact_microslip_v5_minus_particle_friction_belief damage_rate: mean=0.000391 ci95=0.005820 lower95=-0.005429 upper95=0.006211
+calibrated_precontact_microslip_v5_minus_particle_friction_belief intervention_cost: mean=0.052550 ci95=0.001348 lower95=0.051201 upper95=0.053898
+calibrated_precontact_microslip_v5_minus_particle_friction_belief control_chatter: mean=0.031356 ci95=0.000705 lower95=0.030651 upper95=0.032062
+calibrated_precontact_microslip_v5_minus_particle_friction_belief recovery_success: mean=0.043490 ci95=0.009227 lower95=0.034263 upper95=0.052716
+calibrated_precontact_microslip_v5_minus_particle_friction_belief robust_utility: mean=0.048585 ci95=0.015098 lower95=0.033487 upper95=0.063683
+calibrated_precontact_microslip_v5_minus_recovery_aware_grasp_mpc average_precision: mean=0.000849 ci95=0.013864 lower95=-0.013015 upper95=0.014713
+calibrated_precontact_microslip_v5_minus_recovery_aware_grasp_mpc auroc: mean=0.006306 ci95=0.022926 lower95=-0.016619 upper95=0.029232
+calibrated_precontact_microslip_v5_minus_recovery_aware_grasp_mpc ece: mean=-0.020881 ci95=0.014478 lower95=-0.035359 upper95=-0.006403
+calibrated_precontact_microslip_v5_minus_recovery_aware_grasp_mpc early_recall: mean=0.009749 ci95=0.004732 lower95=0.005017 upper95=0.014481
+calibrated_precontact_microslip_v5_minus_recovery_aware_grasp_mpc false_alarm_rate: mean=-0.008364 ci95=0.012499 lower95=-0.020863 upper95=0.004135
+calibrated_precontact_microslip_v5_minus_recovery_aware_grasp_mpc lead_time_margin: mean=0.009557 ci95=0.000719 lower95=0.008838 upper95=0.010276
+calibrated_precontact_microslip_v5_minus_recovery_aware_grasp_mpc task_success: mean=-0.075260 ci95=0.008674 lower95=-0.083934 upper95=-0.066587
+calibrated_precontact_microslip_v5_minus_recovery_aware_grasp_mpc gross_slip: mean=0.025390 ci95=0.016823 lower95=0.008568 upper95=0.042213
+calibrated_precontact_microslip_v5_minus_recovery_aware_grasp_mpc damage_rate: mean=0.010417 ci95=0.009327 lower95=0.001090 upper95=0.019743
+calibrated_precontact_microslip_v5_minus_recovery_aware_grasp_mpc intervention_cost: mean=-0.027146 ci95=0.001621 lower95=-0.028766 upper95=-0.025525
+calibrated_precontact_microslip_v5_minus_recovery_aware_grasp_mpc control_chatter: mean=0.026954 ci95=0.000688 lower95=0.026266 upper95=0.027642
+calibrated_precontact_microslip_v5_minus_recovery_aware_grasp_mpc recovery_success: mean=-0.051693 ci95=0.007581 lower95=-0.059273 upper95=-0.044112
+calibrated_precontact_microslip_v5_minus_recovery_aware_grasp_mpc robust_utility: mean=-0.089340 ci95=0.015019 lower95=-0.104359 upper95=-0.074322
+calibrated_precontact_microslip_v5_minus_precontact_microslip_v4 average_precision: mean=-0.004378 ci95=0.011636 lower95=-0.016014 upper95=0.007258
+calibrated_precontact_microslip_v5_minus_precontact_microslip_v4 auroc: mean=-0.006787 ci95=0.019275 lower95=-0.026061 upper95=0.012488
+calibrated_precontact_microslip_v5_minus_precontact_microslip_v4 ece: mean=-0.024414 ci95=0.008756 lower95=-0.033170 upper95=-0.015658
+calibrated_precontact_microslip_v5_minus_precontact_microslip_v4 early_recall: mean=0.002497 ci95=0.006369 lower95=-0.003872 upper95=0.008866
+calibrated_precontact_microslip_v5_minus_precontact_microslip_v4 false_alarm_rate: mean=-0.005969 ci95=0.020909 lower95=-0.026878 upper95=0.014941
+calibrated_precontact_microslip_v5_minus_precontact_microslip_v4 lead_time_margin: mean=-0.010615 ci95=0.000911 lower95=-0.011526 upper95=-0.009704
+calibrated_precontact_microslip_v5_minus_precontact_microslip_v4 task_success: mean=0.023958 ci95=0.010385 lower95=0.013573 upper95=0.034344
+calibrated_precontact_microslip_v5_minus_precontact_microslip_v4 gross_slip: mean=-0.015234 ci95=0.014705 lower95=-0.029939 upper95=-0.000529
+calibrated_precontact_microslip_v5_minus_precontact_microslip_v4 damage_rate: mean=-0.004297 ci95=0.008849 lower95=-0.013146 upper95=0.004552
+calibrated_precontact_microslip_v5_minus_precontact_microslip_v4 intervention_cost: mean=-0.076388 ci95=0.002690 lower95=-0.079078 upper95=-0.073698
+calibrated_precontact_microslip_v5_minus_precontact_microslip_v4 control_chatter: mean=-0.040083 ci95=0.001184 lower95=-0.041267 upper95=-0.038899
+calibrated_precontact_microslip_v5_minus_precontact_microslip_v4 recovery_success: mean=0.021484 ci95=0.008180 lower95=0.013305 upper95=0.029664
+calibrated_precontact_microslip_v5_minus_precontact_microslip_v4 robust_utility: mean=0.051021 ci95=0.015200 lower95=0.035822 upper95=0.066221
 
-Gate checks:
-ap_gate=False
-early_recall_gate=True
-control_gate=True
-false_alarm_ok=False
-cost_ok=False
-ablation_gate=False best_ablation=vision_only_precontact
-stress_gate=False stress_best_baseline=optical_tactile_classifier
-oracle_combined_ap=0.79658
+Ablation utility:
+full_precontact_microslip_v5 ap=0.80371 success=0.33307 gross=0.42357 false_alarm=0.90523 utility=-0.01732
+minus_precontact_shear ap=0.79075 success=0.20352 gross=0.52865 false_alarm=0.75554 utility=-0.17265
+minus_friction_prior ap=0.80111 success=0.26810 gross=0.46719 false_alarm=0.81485 utility=-0.08976
+minus_compliance_model ap=0.80275 success=0.28203 gross=0.44557 false_alarm=0.90170 utility=-0.07413
+minus_latency_margin ap=0.79891 success=0.28425 gross=0.44675 false_alarm=0.95234 utility=-0.07126
+minus_calibration_layer ap=0.80064 success=0.32396 gross=0.42773 false_alarm=0.97305 utility=-0.06229
+minus_visual_gap ap=0.80300 success=0.28047 gross=0.45729 false_alarm=0.91670 utility=-0.08449
+minus_recovery_model ap=0.80642 success=0.26276 gross=0.45482 false_alarm=0.90870 utility=-0.10285
+vision_only_precontact ap=0.79340 success=0.15221 gross=0.57148 false_alarm=0.44939 utility=-0.22157
+force_only_precontact ap=0.78226 success=0.12838 gross=0.60521 false_alarm=0.42264 utility=-0.25716
+
+Maximum combined stress:
+vision_gap_threshold ap=0.83843 success=0.13972 gross=0.61667 utility=-0.25349
+normal_force_threshold ap=0.82220 success=0.08944 gross=0.66250 utility=-0.30877
+force_derivative_detector ap=0.81587 success=0.10694 gross=0.63389 utility=-0.29544
+friction_cone_margin ap=0.83834 success=0.25833 gross=0.49861 utility=-0.11442
+tactile_temporal_filter ap=0.82602 success=0.12028 gross=0.60556 utility=-0.28301
+optical_tactile_classifier ap=0.82933 success=0.18722 gross=0.51972 utility=-0.19831
+ensemble_uncertainty_guard ap=0.82159 success=0.32361 gross=0.43750 utility=-0.05528
+conformal_precontact_risk ap=0.81618 success=0.22222 gross=0.52500 utility=-0.15185
+particle_friction_belief ap=0.82243 success=0.27139 gross=0.48972 utility=-0.09663
+mpc_grip_stabilizer ap=0.81237 success=0.35361 gross=0.41000 utility=0.01945
+recovery_aware_grasp_mpc ap=0.82341 success=0.38417 gross=0.40305 utility=0.04646
+precontact_microslip_v4 ap=0.83284 success=0.28333 gross=0.45389 utility=-0.09664
+calibrated_precontact_microslip_v5 ap=0.82039 success=0.30861 gross=0.44889 utility=-0.04937
+
+Fixed-risk budget 0.05:
+low_signal_high_risk_shift calibrated_precontact_microslip_v5 coverage=0.00000 accepted_success=0.00000 accepted_gross_slip=0.00000 accepted_damage=0.00000
+low_signal_high_risk_shift conformal_precontact_risk coverage=0.00000 accepted_success=0.00000 accepted_gross_slip=0.00000 accepted_damage=0.00000
+low_signal_high_risk_shift particle_friction_belief coverage=0.00000 accepted_success=0.00000 accepted_gross_slip=0.00000 accepted_damage=0.00000
+low_signal_high_risk_shift mpc_grip_stabilizer coverage=0.00000 accepted_success=0.00000 accepted_gross_slip=0.00000 accepted_damage=0.00000
+low_signal_high_risk_shift recovery_aware_grasp_mpc coverage=0.00000 accepted_success=0.00000 accepted_gross_slip=0.00000 accepted_damage=0.00000
+low_signal_high_risk_shift ensemble_uncertainty_guard coverage=0.00000 accepted_success=0.00000 accepted_gross_slip=0.00000 accepted_damage=0.00000
+combined_hard_shift calibrated_precontact_microslip_v5 coverage=0.00000 accepted_success=0.00000 accepted_gross_slip=0.00000 accepted_damage=0.00000
+combined_hard_shift conformal_precontact_risk coverage=0.00000 accepted_success=0.00000 accepted_gross_slip=0.00000 accepted_damage=0.00000
+combined_hard_shift particle_friction_belief coverage=0.00000 accepted_success=0.00000 accepted_gross_slip=0.00000 accepted_damage=0.00000
+combined_hard_shift mpc_grip_stabilizer coverage=0.00000 accepted_success=0.00000 accepted_gross_slip=0.00000 accepted_damage=0.00000
+combined_hard_shift recovery_aware_grasp_mpc coverage=0.00000 accepted_success=0.00000 accepted_gross_slip=0.00000 accepted_damage=0.00000
+combined_hard_shift ensemble_uncertainty_guard coverage=0.00000 accepted_success=0.00000 accepted_gross_slip=0.00000 accepted_damage=0.00000
+
+Negative cases: 24
+terminal=KILL_ARCHIVE
