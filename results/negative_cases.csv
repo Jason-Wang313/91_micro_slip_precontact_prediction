@@ -1,4 +1,25 @@
-case,observed_failure,implication
-compliance_overreaction,precontact compliance raises risk before actual slip and increases false tightening on soft objects,the compliance term is not reliably separable from harmless deformation
-post_contact_tactile_catches_up,friction-cone and optical-tactile baselines match or beat prediction quality once contact begins,precontact lead time alone is insufficient without a decisive control gain
-sensor_noise_shift,precontact shear estimates become poorly calibrated under visual occlusion and tactile noise,submission-ready claims require real tactile hardware or accepted high-fidelity validation
+case_id,seed,task,split,episode,failure_mode,slip_event,v5_score,v5_success,v5_false_alarm,v5_cost,best_baseline,best_baseline_success,best_baseline_utility
+1,0,compliant_object_lift,combined_hard_shift,0,all_non_oracle_fail,1,0.690831,0,0,0.331552,conformal_precontact_risk,0,-0.009279
+2,0,compliant_object_lift,combined_hard_shift,1,false_positive_burden,0,0.894854,0,1,0.454024,conformal_precontact_risk,1,0.759841
+3,0,compliant_object_lift,combined_hard_shift,2,false_positive_burden,0,0.864315,0,1,0.453410,conformal_precontact_risk,1,0.761059
+4,0,compliant_object_lift,combined_hard_shift,3,all_non_oracle_fail,1,0.688626,0,0,0.332349,conformal_precontact_risk,0,-0.051643
+5,0,compliant_object_lift,combined_hard_shift,4,baseline_recovers_v5_fails,1,0.908580,0,0,0.332086,particle_friction_belief,1,0.461196
+6,0,compliant_object_lift,combined_hard_shift,5,false_positive_burden,0,1.000000,0,1,0.454175,mpc_grip_stabilizer,1,0.742458
+7,0,compliant_object_lift,combined_hard_shift,6,baseline_recovers_v5_fails,1,1.000000,0,0,0.330211,ensemble_uncertainty_guard,1,0.427165
+8,0,compliant_object_lift,combined_hard_shift,7,baseline_recovers_v5_fails,1,0.776782,0,0,0.332784,conformal_precontact_risk,1,0.948720
+9,0,compliant_object_lift,combined_hard_shift,9,false_positive_burden,0,0.680060,0,1,0.454446,conformal_precontact_risk,1,0.760343
+10,0,compliant_object_lift,combined_hard_shift,10,all_non_oracle_fail,1,0.859750,1,0,0.332281,recovery_aware_grasp_mpc,0,-0.075030
+11,0,compliant_object_lift,combined_hard_shift,11,all_non_oracle_fail,1,0.855145,0,0,0.331525,conformal_precontact_risk,0,-0.052621
+12,0,compliant_object_lift,combined_hard_shift,13,baseline_recovers_v5_fails,1,0.557801,0,0,0.052422,recovery_aware_grasp_mpc,1,0.446570
+13,0,compliant_object_lift,combined_hard_shift,14,false_positive_burden,0,0.769667,0,1,0.454423,conformal_precontact_risk,1,0.761010
+14,0,compliant_object_lift,combined_hard_shift,15,baseline_recovers_v5_fails,1,0.894639,0,0,0.330229,particle_friction_belief,1,0.941144
+15,0,compliant_object_lift,combined_hard_shift,17,baseline_recovers_v5_fails,1,0.693268,0,0,0.333648,recovery_aware_grasp_mpc,1,0.505626
+16,0,compliant_object_lift,combined_hard_shift,19,all_non_oracle_fail,1,0.965775,0,0,0.333085,conformal_precontact_risk,0,-0.489555
+17,0,compliant_object_lift,combined_hard_shift,20,false_positive_burden,0,1.000000,0,1,0.454520,particle_friction_belief,1,0.752829
+18,0,compliant_object_lift,combined_hard_shift,22,baseline_recovers_v5_fails,1,0.823035,0,0,0.331356,mpc_grip_stabilizer,1,0.452524
+19,0,compliant_object_lift,combined_hard_shift,23,false_positive_burden,0,0.781209,1,1,0.457484,recovery_aware_grasp_mpc,1,0.255069
+20,0,compliant_object_lift,combined_hard_shift,24,baseline_recovers_v5_fails,1,0.903333,0,0,0.333126,recovery_aware_grasp_mpc,1,0.444890
+21,0,compliant_object_lift,combined_hard_shift,25,baseline_recovers_v5_fails,1,0.715280,0,0,0.330644,particle_friction_belief,1,0.463588
+22,0,compliant_object_lift,combined_hard_shift,26,baseline_recovers_v5_fails,1,0.538876,0,0,0.052307,recovery_aware_grasp_mpc,1,0.925942
+23,0,compliant_object_lift,combined_hard_shift,27,baseline_recovers_v5_fails,1,0.853841,0,0,0.331097,ensemble_uncertainty_guard,1,0.007013
+24,0,compliant_object_lift,combined_hard_shift,29,false_positive_burden,0,0.811892,1,1,0.453718,conformal_precontact_risk,1,0.279409
